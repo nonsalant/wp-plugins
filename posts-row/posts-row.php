@@ -11,8 +11,6 @@ Released under the GNU General Public License (GPL)
 http://www.gnu.org/licenses/gpl.txt
 */
 
-define('DISALLOW_FILE_EDIT', false); // enable plugin & theme editors
-
 $row_id = 0;
 
 add_action( 'init', function () {
