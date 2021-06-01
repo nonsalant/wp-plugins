@@ -38,6 +38,7 @@ if ( ( 1 == $posts_row_atts['excerpt']) ) {
 }
 
 $full_ssr_location = $site_url . $ssr_location . $ssr_params;
+ini_set('user_agent','Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.13) Gecko/20080311 Firefox/2.0.0.13');
 $ssr = file_get_contents( $full_ssr_location ); 
 #endregion set up
 
