@@ -223,6 +223,8 @@
 
 button.go-to-page-1 {
     display: flex;
+    align-items: center;
+    justify-content: center;
     margin: auto;
     text-decoration: none;
     max-height: 1em;
@@ -233,7 +235,7 @@ button.go-to-page-1:hover {
     text-decoration: none;
     transform: translateX(-1ch);
 }
-button.go-to-page-1 > div {
+/* button.go-to-page-1 > div {
     white-space: nowrap;
     font-weight: normal;
     margin-inline-start: .5ch;
@@ -247,16 +249,15 @@ button.go-to-page-1:hover > div {
     margin-inline-end: .25ch;
     padding-inline-end: 3.5ch;
     padding-inline-end: .25ch;
-}
+}*/
 
-button.go-to-page-1 > div > span {
+/* button.go-to-page-1 > div > span {
     transition: font-weight .3s ease-out;
     transition-property: font-weight, color;
 }
 button.go-to-page-1:hover > div > span {
-    font-weight: bold;
     color: var(--main-clr);
-}
+} */
 
 a.go-to-page-1 {
     text-decoration: none;
