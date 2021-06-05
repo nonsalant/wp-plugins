@@ -19,25 +19,19 @@ add_action('wp_enqueue_scripts', function() {
     wp_enqueue_style( 'posts-row-style', plugins_url('/assets/style.css', __FILE__),  [], $cache_buster);
 });
 
-add_action( 'init', function () {
-	add_shortcode( 'posts-row', 'posts_row_shortcode' );
-});
-
-
+// [posts-row] shortcode setup
 $row_id = 0;
-
-function posts_row_shortcode( $atts = [], $content = null) {
-    global $row_id; $row_id++;
-    
+function posts_row_shortcode($atts = []) {
+    global $row_id; 
     $remote_atts = ['ids','slugs','cat','tag','excerpt'];
     $local_atts = ['heading','button','link'];
     $available_atts = array_fill_keys(array_merge($remote_atts, $local_atts), null);
+    
     $available_atts['heading'] = 'Featured Posts';
     
     // atts to lowercase
     $atts = array_change_key_case( (array) $atts, CASE_LOWER );
     $posts_row_atts = shortcode_atts($available_atts, $atts);
-    
     // get var names from $local_atts[]
     foreach ($local_atts as &$attribute) {
         $$attribute = $posts_row_atts[$attribute] ? $posts_row_atts[$attribute] : null; 
@@ -54,6 +48,9 @@ function posts_row_shortcode( $atts = [], $content = null) {
     return $initial_content;
 }
 
+add_action('init', function () {
+	add_shortcode('posts-row', 'posts_row_shortcode');
+});
 
 function posts_row_remove_spaces($value) {
     return str_replace(' ', '', $value);

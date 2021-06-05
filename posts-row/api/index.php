@@ -13,7 +13,6 @@ if ( ! is_plugin_active('posts-row/posts-row.php') ) {
     echo '<p>the plugin is inactive.</p>';
     return;
 }
-#endregion Endpoint Setup
 
 $remote_atts = ['ids','slugs','cat','tag','excerpt','paged'];
 $posts_per_page = 4;
