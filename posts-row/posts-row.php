@@ -24,14 +24,14 @@ add_action('wp_enqueue_scripts', function() {
     wp_enqueue_style('posts-row-style', plugins_url('/assets/style.css', __FILE__), [], $cache_buster);
 });
 
-
 function posts_row_remove_spaces($value) {
     return str_replace(' ', '', $value);
 }
 
 $row_id = 0;
 
-function posts_row_shortcode( $atts = [], $content = null) {    
+function posts_row_shortcode( $atts = [], $content = null) {
+    global $row_id; $row_id++;
     
     $remote_atts = ['ids','slugs','cat','tag','excerpt'];
     $local_atts = ['heading','button','link'];
@@ -42,8 +42,6 @@ function posts_row_shortcode( $atts = [], $content = null) {
     $atts = array_change_key_case( (array) $atts, CASE_LOWER );
     $posts_row_atts = shortcode_atts($available_atts, $atts);
     
-    global $row_id; $row_id++;
-
     // get var names from $local_atts[]
     foreach ($local_atts as &$attribute) {
         $$attribute = $posts_row_atts[$attribute] ? $posts_row_atts[$attribute] : null; 
@@ -53,7 +51,7 @@ function posts_row_shortcode( $atts = [], $content = null) {
     $posts_row_atts['ids'] = posts_row_remove_spaces($posts_row_atts['ids']);
     $posts_row_atts['slugs'] = posts_row_remove_spaces($posts_row_atts['slugs']);
 
-    // uses $remote_atts[]
+    // uses $remote_atts[], $row_id, var names from $local_atts[]
     // $initialContent is set here.
     require('initialContent.php'); 
     return $initialContent;

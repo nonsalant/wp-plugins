@@ -27,7 +27,7 @@ function posts_row_ssr() {
     }
     $excerpt_flag = $excerpt ? 1 : 0;
 
-    // uses $remote_atts[]
+    // uses var names from $remote_atts[]
     // $query_array is set here.
     require('query_array.php');
     $the_query = new WP_Query($query_array);
@@ -52,6 +52,7 @@ function posts_row_ssr() {
         $uri = get_permalink();
         $excerpt = $excerpt_flag ? get_the_excerpt() : null;
 
+        // uses var names from $remote_atts[]
         // $singleItemTemplate is set here.
         require('../templates/singleItemTemplate.php');
         echo $singleItemTemplate;
