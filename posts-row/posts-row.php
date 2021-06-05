@@ -11,22 +11,18 @@ Released under the GNU General Public License (GPL)
 http://www.gnu.org/licenses/gpl.txt
 */
 
-// when to inlude the plugin script and style
-function posts_row_conditional_logic() {
-    if ( is_page() ) { return true; } 
-    return false;
-}
 // include script and style with ?ver= in url params
 add_action('wp_enqueue_scripts', function() {
-    $cache_buster = '1.0';
+    $cache_buster = '1.1'; 
     //$cache_buster = substr(md5(microtime()),rand(0,26),8); /** ⚠️ don't use this on production */
     wp_enqueue_script('posts-row-script', plugins_url('/assets/script.js', __FILE__), [], $cache_buster, true);
-    wp_enqueue_style('posts-row-style', plugins_url('/assets/style.css', __FILE__), [], $cache_buster);
+    wp_enqueue_style( 'posts-row-style', plugins_url('/assets/style.css', __FILE__),  [], $cache_buster);
 });
 
-function posts_row_remove_spaces($value) {
-    return str_replace(' ', '', $value);
-}
+add_action( 'init', function () {
+	add_shortcode( 'posts-row', 'posts_row_shortcode' );
+});
+
 
 $row_id = 0;
 
@@ -52,10 +48,13 @@ function posts_row_shortcode( $atts = [], $content = null) {
     $posts_row_atts['slugs'] = posts_row_remove_spaces($posts_row_atts['slugs']);
 
     // uses $remote_atts[], $row_id, var names from $local_atts[]
-    // $initialContent is set here.
-    require('initialContent.php'); 
-    return $initialContent;
+    require('posts-row-middleware.php'); 
+    // $initial_content is set here.
+
+    return $initial_content;
 }
-add_action( 'init', function () {
-	add_shortcode( 'posts-row', 'posts_row_shortcode' );
-});
+
+
+function posts_row_remove_spaces($value) {
+    return str_replace(' ', '', $value);
+}

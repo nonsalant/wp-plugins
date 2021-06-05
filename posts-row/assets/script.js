@@ -31,7 +31,7 @@ posts_rows.forEach((row) => {
     //"/ssr/?heading=$heading&ids=$ids&cat=$cat&link=$link&button=$button";
     row.querySelector(".featured-posts-grid").classList.add("loading");
 
-    fetch(ssr_location + "&pagination=" + pagination)
+    fetch(ssr_location + "&paged=" + pagination)
       .then(function (response) {
         return response.text();
       })
@@ -56,7 +56,7 @@ posts_rows.forEach((row) => {
           targetElement.classList.add("pulsate")
 
           // show .go-to-page-1 on following pages
-          if (pagination < 2) { // ℹ️ 2 or 3
+          if (pagination < 3) { // ℹ️ 2 or 3
             // un-hide .go-to-page-1
             row.querySelector(".go-to-page-1").classList.add("hidden");
           } else {

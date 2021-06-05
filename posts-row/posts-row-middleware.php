@@ -13,7 +13,8 @@ ini_set('user_agent', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11) AppleWebKit
 
 $ssr = file_get_contents( $ssr_location );
 
-// $initialContent is set here
 // uses var names from $local_atts[], $row_id, $ssr_location
-require('templates/postsRowTemplate.php');
-$initialContent = $postsRowTemplate;
+require('templates/posts_row.php'); 
+// $posts_row is set here
+
+$initial_content = $posts_row;

@@ -1,4 +1,8 @@
 <?php
+foreach ($remote_atts as &$attribute) {
+    $$attribute =  isset($_GET[$attribute]) ? sanitize_text_field($_GET[$attribute]) : null;
+}
+
 if ($ids) {
     $ids_array = explode(',', $ids);
     $query_array =  array(
@@ -31,14 +35,37 @@ if ($ids) {
 }
 
 $query_array = array_merge($query_array, array(
-    'posts_per_page' => $limit,
-    'paged' => $pagination,
+    'posts_per_page' => $posts_per_page,
+    'paged' => $paged,
     'post_status' => 'publish'
 ));
 
+$the_query = new WP_Query($query_array);
+    
 if(!$the_query->have_posts()) {
     http_response_code(404);
     echo '<p>no posts found.</p>';
     return;
 }
 http_response_code(200);
+
+echo '<input type="hidden" data-totalpages="'.$the_query->max_num_pages.'">';
+
+#region The Loop
+while ( $the_query->have_posts() ) { $the_query->the_post();
+    $img_size = 'pixelgrade_hero_image';
+    $img = get_the_post_thumbnail_url( get_the_ID(), $img_size );
+    $title = get_the_title();
+    $uri = get_permalink();
+    $excerpt = $excerpt ? get_the_excerpt() : null;
+
+    // uses var names from $remote_atts[]
+    require('../templates/single_item.php'); 
+    // $single_item is set here.
+
+    echo $single_item;
+
+} // end while
+#endregion The Loop
+
+wp_reset_postdata();

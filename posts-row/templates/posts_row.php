@@ -1,4 +1,4 @@
-<?php $postsRowTemplate = <<<HTML
+<?php $posts_row = <<<HTML
 <div id="posts-row-wrapper-{$row_id}" class="widget-area">
     <section id="featured-posts-grid-123" class="widget widget--full widget_featured_posts_grid">
         <h2 class="widget__title">

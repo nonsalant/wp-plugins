@@ -1,4 +1,4 @@
-<?php $singleItemTemplate = <<<HTML
+<?php $single_item = <<<HTML
     <article class="post type-post status-publish format-standard has-post-thumbnail hentry u-content-bottom-spacing">
         <div class="c-card">
             <div class="c-card__aside c-card__thumbnail-background">
