@@ -17,10 +17,10 @@ if ( ! is_plugin_active('posts-row/posts-row.php') ) {
 
 posts_row_ssr();
 function posts_row_ssr() {
-    
     #region set up
     $remote_atts = ['ids','slugs','cat','tag','excerpt','pagination'];
     $limit = 4;
+    $totalPages = $the_query->max_num_pages;
 
     foreach ($remote_atts as &$attribute) {
         $$attribute =  isset($_GET[$attribute]) ? sanitize_text_field($_GET[$attribute]) : null;
@@ -32,14 +32,6 @@ function posts_row_ssr() {
     require('query_array.php');
     $the_query = new WP_Query($query_array);
     
-    if(!$the_query->have_posts()) {
-        http_response_code(404);
-        echo '<p>no posts found.</p>';
-        return;
-    }
-    http_response_code(200);
-    $totalPages = $the_query->max_num_pages;
-
     #endregion set up
 
     echo '<input type="hidden" data-totalpages="'.$totalPages.'">';
