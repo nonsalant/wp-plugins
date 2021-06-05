@@ -35,3 +35,10 @@ $query_array = array_merge($query_array, array(
     'paged' => $pagination,
     'post_status' => 'publish'
 ));
+
+if(!$the_query->have_posts()) {
+    http_response_code(404);
+    echo '<p>no posts found.</p>';
+    return;
+}
+http_response_code(200);
