@@ -19,16 +19,16 @@ posts_row_ssr();
 function posts_row_ssr() {
     
     #region set up
-    $limit = 4;
-    $ids =     trim(sanitize_text_field($_GET['ids']));
-    $slugs =   trim(sanitize_text_field($_GET['slugs']));
-    $tag =          sanitize_text_field($_GET['tag']);
-    $cat =          sanitize_text_field($_GET['cat']);
-    $pagination  =  sanitize_text_field($_GET['pagination']);
-    if (isset($_GET['excerpt'])) {
-        $excerpt_flag = 1;
+    $remote_atts = ['ids','slugs','cat','tag','excerpt','pagination'];
+    foreach ($remote_atts as &$attribute) {
+        $$attribute =  isset($_GET[$attribute]) ? sanitize_text_field($_GET[$attribute]) : '';
     }
+    
+    //$excerpt_flag = (isset($_GET['excerpt'])) ? 1 : 0;
+    $excerpt_flag = $excerpt ? 1 : 0;
+    $limit = 4;
 
+    #region query setup
     if ($ids) {
         $ids_array = explode(',', $ids);
         $query_array =  array(
@@ -72,6 +72,8 @@ function posts_row_ssr() {
     }
     http_response_code(200);
     $totalPages = $the_query->max_num_pages;
+    #endregion query setup
+
     #endregion set up
 
     echo '<input type="hidden" data-totalpages="'.$totalPages.'">';

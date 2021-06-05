@@ -11,21 +11,6 @@ Released under the GNU General Public License (GPL)
 http://www.gnu.org/licenses/gpl.txt
 */
 
-$row_id = 0;
-
-add_action( 'init', function () {
-	add_shortcode( 'posts-row', 'posts_row_shortcode' );
-});
-function posts_row_shortcode( $atts = [], $content = null) {
-    // atts to lowercase
-	$atts = array_change_key_case( (array) $atts, CASE_LOWER );
-    
-    // $initial_content is set here.
-    require('posts-row-wrapper.php'); 
-    
-    return $initial_content;
-}
-
 #region Script and Style 
 # - conditional inclusions
 # - cache busting
@@ -36,40 +21,50 @@ function posts_row_conditional_logic() {
     if ( is_page() ) { return true; } 
     return false;
 }
-$cache_buster = substr(md5(microtime()),rand(0,26),8);
-/** ⚠️ disable on production */
-// $cache_buster = 0;
+add_action('wp_enqueue_scripts', function() {
+    $cache_buster = '1.0';
+    //$cache_buster = substr(md5(microtime()),rand(0,26),8); /** ⚠️ don't use this on production */
+    wp_enqueue_script('posts-row-script', plugins_url('/script.js', __FILE__), [], $cache_buster, true);
+    wp_enqueue_style('posts-row-style', plugins_url('/style.css', __FILE__), [], $cache_buster);
+});
 
-add_action('wp_head', 'posts_row_header');
-function posts_row_header() {
-    global $cache_buster;
-    if (posts_row_conditional_logic()) {
-        ?>
-        <link rel="stylesheet" href="<?php
-		    echo plugins_url('', __FILE__ );
-        ?>/style.css?cache-buster=<?php
-        echo $cache_buster;
-        ?>" />
-        <?php
-    } // end if()
-} // end posts_row_header()
-
-add_action('wp_footer', 'posts_row_footer');
-function posts_row_footer() {
-    global $cache_buster;
-    // enable arrows only on pages
-    if (posts_row_conditional_logic()) {
-        ?>
-        <script src="<?php
-        echo plugins_url('', __FILE__ );
-        ?>/script.js?cache-buster=<?php
-        echo $cache_buster;
-        ?>"></script>
-        <?php
-    } // end if()
-} // end posts_row_footer()
 
 ##########
 #endregion Script and Style
+
+$row_id = 0;
+function posts_row_remove_spaces($value) {
+    return str_replace(' ', '', $value);
+}
+
+function posts_row_shortcode( $atts = [], $content = null) {
+
+    $remote_atts = ['ids','slugs','cat','tag','excerpt'];
+    $local_atts = ['heading','button','link'];
+    
+    $available_atts = array_merge($remote_atts, $local_atts);
+    $available_atts = array_fill_keys($available_atts,'');
+    // atts to lowercase
+    $atts = array_change_key_case( (array) $atts, CASE_LOWER );
+    $posts_row_atts = shortcode_atts($available_atts, $atts);
+    // remove spaces from comma-separated values
+    $posts_row_atts['ids'] = posts_row_remove_spaces($posts_row_atts['ids']);
+    $posts_row_atts['slugs'] = posts_row_remove_spaces($posts_row_atts['slugs']);
+    
+    $heading= $posts_row_atts['heading'] ?: 'Featured Posts';
+    $button = $posts_row_atts['button'];
+    $link   = $posts_row_atts['link'];
+    
+    global $row_id;
+    $row_id++;
+    // $initial_content is set here.
+    require('posts-row-wrapper.php'); 
+    return $initial_content;
+}
+add_action( 'init', function () {
+	add_shortcode( 'posts-row', 'posts_row_shortcode' );
+});
+
+
 
 ?>

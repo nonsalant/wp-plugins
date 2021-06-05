@@ -1,45 +1,20 @@
 <?php
-
 #region set up
-// default atts (overriden by user atts)
-$posts_row_atts = shortcode_atts(
-    array(
-        'ids' => '',
-        'slugs' => '',
-        'cat' => '',
-        'tag' => '',
-        'heading' => 'Featured Posts',
-        'link' => '',
-        'button' => '',
-        'excerpt' => 0
-    ), $atts
-);
 
-global $row_id;
-$row_id++;
-
-$ids    = $posts_row_atts['ids'];
-$slugs  = $posts_row_atts['slugs'];
-$cat    = $posts_row_atts['cat'];
-$tag    = $posts_row_atts['tag'];
-$heading= $posts_row_atts['heading'];
-$button = $posts_row_atts['button'];
-$link   = $posts_row_atts['link'];
-
-
-$site_url = get_site_url();
-$ssr_location = "/wp-content/plugins/posts-row/ssr.php";
-$ssr_params = "?ids=$ids";
-    $ssr_params .= "&slugs=$slugs";
-    $ssr_params .= "&cat=$cat";
-    $ssr_params .= "&tag=$tag";
-if ( ( 1 == $posts_row_atts['excerpt']) ) {
-    $ssr_params .= "&excerpt";
+$ssr_relative_location = '/wp-content/plugins/posts-row/ssr.php';
+$non_null_remote_atts = [];
+foreach ($remote_atts as &$attribute) {
+    if ($posts_row_atts[$attribute])
+        $non_null_remote_atts[$attribute] = $posts_row_atts[$attribute];
 }
+$ssr_params = http_build_query($non_null_remote_atts);
+$ssr_location = get_site_url().$ssr_relative_location.'?'.$ssr_params;
 
+// fake user agent (otherwise file_get_contents() doesn't work with absolute URL on some hosts like BlueHost)
 ini_set('user_agent', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11) AppleWebKit/601.1.56 (KHTML, like Gecko) Version/9.0 Safari/601.1.56');
-$full_ssr_location = $site_url . $ssr_location . $ssr_params;
-$ssr = file_get_contents( $full_ssr_location ); 
+
+$ssr = file_get_contents( $ssr_location );
+
 #endregion set up
 
 $initial_content = <<<HTML
@@ -48,7 +23,7 @@ $initial_content = <<<HTML
         <h2 class="widget__title">
             <span>{$heading}</span>
         </h2>
-        <div data-ssr_location="{$full_ssr_location}" data-pagination="1" class="featured-posts-grid o-grid o-grid--4col-@small aspect-ratio-landscape 
+        <div data-ssr_location="{$ssr_location}" data-pagination="1" class="featured-posts-grid o-grid o-grid--4col-@small aspect-ratio-landscape 
         featured-posts--show-readmore">
             <!-- from ssr.php endpoint -->
             {$ssr}
