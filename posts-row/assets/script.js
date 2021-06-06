@@ -27,11 +27,11 @@ posts_rows.forEach((row) => {
 
   const fetchPage = (pagination) => {
 
-    const ssr_location = row.querySelector("[data-ssr_location]").dataset.ssr_location;
-    //"/ssr/?heading=$heading&ids=$ids&cat=$cat&link=$link&button=$button";
+    const remote_location = row.querySelector("[data-remote_location]").dataset.remote_location;
+    //"/api/?heading=$heading&ids=$ids&cat=$cat&link=$link&button=$button";
     row.querySelector(".featured-posts-grid").classList.add("loading");
 
-    fetch(ssr_location + "&paged=" + pagination)
+    fetch(remote_location + "&paged=" + pagination)
       .then(function (response) {
         return response.text();
       })

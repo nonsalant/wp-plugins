@@ -4,11 +4,11 @@
         <h2 class="widget__title">
             <span>{$heading}</span>
         </h2>
-        <div data-ssr_location="{$ssr_location}" data-pagination="1" class="featured-posts-grid o-grid o-grid--4col-@small aspect-ratio-landscape 
+        <div data-remote_location="{$remote_location}" data-pagination="1" class="featured-posts-grid o-grid o-grid--4col-@small aspect-ratio-landscape 
         featured-posts--show-readmore">
-            <!-- from ssr.php endpoint -->
-            {$ssr}
-            <!-- /from ssr.php endpoint -->
+            <!-- from /api/ endpoint -->
+            {$remote_content}
+            <!-- /from /api/ endpoint -->
         </div>
         <div class="featured-posts__footer">
             <a class="featured-posts__more" href="{$link}">

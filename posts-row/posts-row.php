@@ -15,7 +15,7 @@ http://www.gnu.org/licenses/gpl.txt
 add_filter( 'the_content', 'posts_row_filter_the_content', 1 );
 function posts_row_filter_the_content( $content ) {
     if ( has_shortcode($content,'posts-row') ) {
-        $cache_buster = '1.1'; 
+        $cache_buster = '1.2'; 
         //$cache_buster = substr(md5(microtime()),rand(0,26),8); /** ⚠️ don't use this on production */
         wp_enqueue_script('posts-row-script', plugins_url('/assets/script.js', __FILE__), [], $cache_buster, true);
         wp_enqueue_style( 'posts-row-style', plugins_url('/assets/style.css', __FILE__),  [], $cache_buster);
