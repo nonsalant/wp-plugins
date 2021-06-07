@@ -11,10 +11,10 @@ Released under the GNU General Public License (GPL)
 http://www.gnu.org/licenses/gpl.txt
 */
 
-// include assets only if the [posts-row] shortcode is used inside the content
 add_filter( 'the_content', 'posts_row_filter_the_content', 1 );
 function posts_row_filter_the_content( $content ) {
-    if ( has_shortcode($content,'posts-row') ) {
+    // include assets only if the [posts-row] shortcode is used inside the content (+ on the 1st page of categories)
+    if ( (is_category() && ! is_paged()) || has_shortcode($content,'posts-row') ) {
         $cache_buster_css = filemtime(plugin_dir_path(__FILE__).'/assets/style.css');
         $cache_buster_js =  filemtime(plugin_dir_path(__FILE__).'/assets/script.js');
         wp_enqueue_style(   'posts-row-style',      plugins_url('/assets/style.css', __FILE__), [], $cache_buster_css);
@@ -22,6 +22,15 @@ function posts_row_filter_the_content( $content ) {
     }
     return $content;
 }
+
+add_action('wp_head', function(){
+    // hide if it assets weren't enqueued (and it happens to exist, eg: second page of a category)
+    if ( (is_category() && is_paged()) ) {
+        wp_register_style( 'hide-posts-row', false );
+        wp_enqueue_style( 'hide-posts-row' );
+        wp_add_inline_style('hide-posts-row', "[id^='posts-row-wrapper']{ display: none; }");
+    }
+});
 
 // [posts-row] shortcode setup
 
@@ -32,6 +41,7 @@ add_action('init', function () {
 });
 
 function posts_row_shortcode($atts = []) {
+
     global $row_id; 
     $remote_atts = ['ids','slugs','cat','tag','excerpt'];
     $local_atts = ['heading','button','link'];
@@ -42,6 +52,7 @@ function posts_row_shortcode($atts = []) {
     // atts to lowercase
     $atts = array_change_key_case( (array) $atts, CASE_LOWER );
     $posts_row_atts = shortcode_atts($available_atts, $atts);
+
     // get var names from $local_atts[]
     foreach ($local_atts as &$attribute) {
         $$attribute = $posts_row_atts[$attribute] ? $posts_row_atts[$attribute] : null; 
