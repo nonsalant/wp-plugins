@@ -9,10 +9,12 @@ foreach ($remote_atts as &$attribute) {
 $remote_params = http_build_query($non_null_remote_atts);
 $remote_location = plugins_url('../api/', __FILE__).'?'.$remote_params;
 
-// set fake user agent
-ini_set('user_agent', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11) AppleWebKit/601.1.56 (KHTML, like Gecko) Version/9.0 Safari/601.1.56'); //otherwise file_get_contents doesn't work with absolute URL on some hosts like BlueHost
+//// set fake user agent
+//ini_set('user_agent', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11) AppleWebKit/601.1.56 (KHTML, like Gecko) Version/9.0 Safari/601.1.56'); //otherwise file_get_contents doesn't work with absolute URL on some hosts like BlueHost
+//$remote_content = file_get_contents( $remote_location );
 
-$remote_content = file_get_contents( $remote_location );
+$remote_content = wp_remote_retrieve_body(wp_remote_request($remote_location));
+//$remote_content = wp_remote_request($remote_location)['body'];
 
 $row_id++;
 

@@ -1,9 +1,10 @@
 <?php
 
-$posts_row_template = 'felt';
-$posts_row_template = 'default';
+// $posts_row_template = 'felt';
+// $posts_row_template = 'default';
+$posts_row_template = 'blocksy';
 $posts_row_template_file = __DIR__.'/../templates/'.$posts_row_template.'/posts_row.php';
-   
+
 
 // enqueue scripts & styles
 include('assets.php');
@@ -19,9 +20,11 @@ add_action('init', function () {
 function posts_row_shortcode($atts = []) {
     global $row_id, $posts_row_template;
     
-    $remote_atts = ['ids','slugs','cat','tag','excerpt'];
+    include(__DIR__.'/../inc/remote_atts.php');
+    //$remote_atts = ['ids','slugs','cat','tag','excerpt','paged','offset','simple'];
+            
     $local_atts = ['heading','button','link'];
-    $local_atts['heading'] = 'Featured Posts';
+    //$local_atts['heading'] = 'Featured Posts';
     $available_atts = array_fill_keys(array_merge($remote_atts, $local_atts), null);
     
     

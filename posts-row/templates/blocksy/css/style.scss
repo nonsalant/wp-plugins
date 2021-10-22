@@ -1,0 +1,136 @@
+// Blocksy theme adjustments
+
+.wp-block-group .wp-block-columns[class][class],
+.wp-block-group .swp-rnk-preview[class][class] {
+	width: 100%;
+}
+
+.posts-row-wrapper-header {
+	font-size: 1.2rem;
+    --lineHeight: calc(1em + .5rem);
+}
+
+:where(.posts-row) {
+    --light-clr: #fafafa;
+    
+    scroll-margin-top: 6.5rem;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    align-items: start;
+    gap: var(--gap, 1rem); 
+
+    // font-size: .8em;
+
+    & > * {
+        max-width: 50ch;
+		max-width: 100%;
+        min-width: 12ch;
+        margin-inline-start: auto;
+        margin-inline-end:  auto;
+
+        @media (min-width:680px) {
+            min-height: 24em;
+			min-height: min-content;
+        }
+    }
+
+    a {
+        text-decoration: none;
+    }
+
+    .thumb {
+        // min-height: 12em;
+        display: block;
+    }
+
+    img {
+        display: block;
+        max-width: 100%;
+        height: auto;
+
+        // aspect-ratio: 1;
+        object-fit: initial;
+    }
+
+    img[src=""] {
+        display: none;
+    }
+
+    h3.title {
+        font-size: 1.2em;
+        font-weight: bold;
+        margin: var(--gap, 1.5rem) 0;
+    }
+    
+    .excerpt {
+        display: block;
+    }
+
+    .excerpt:empty {
+        display: none;
+    }
+
+    .readmore {
+        font-family: sans-serif;
+		padding: 0;
+		background: none;
+		color: var(--color, #111);
+		text-transform: capitalize;
+
+        &:hover {
+			color: var(--linkHoverColor);
+        }
+    }
+
+    @media (max-width:55em) {
+        // grid-auto-flow: row;
+        grid-template-columns: 1fr;
+        grid-template-columns: repeat(2, 1fr);
+        // align-items: start;
+    }
+}
+
+:where(.posts-row-wrapper) .cta {
+    border: solid 2px #333;
+    border-radius: 5px;
+    width: 100%;
+    padding: var(--gap, 1rem);
+    margin: 0 auto;
+    margin-top: var(--gap, 1rem);
+    display: block;
+    text-align: center;
+}
+
+.posts-row-wrapper-footer { margin-top: 1.5rem; }
+
+.posts-row-wrapper-footer a {
+    color: var(--main-clr,#3862aa); 
+	color: var(--buttonInitialColor);
+    background: none; 
+    border: 2px solid currentColor; 
+    border-radius: 0.3em;
+    display: block;
+    text-align: center;
+    font-family: sans-serif;
+    text-transform: uppercase;
+    padding: .5em;
+    margin: var(--gap, 1.5rem), 0;
+
+    &:hover {
+        color: var(--secondary-clr, hsla(36, 20%, 35%, 1));
+		color: var(--buttonHoverColor);
+        border-color: currentColor;
+    }
+}
+
+a[href=""] { display:none; }
+
+
+// :where(.title) a {
+//     color: red;
+// }
+
+
+
+//@use "aw2g-home.scss";
+@import "aw2g-home.scss";

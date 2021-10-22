@@ -1,13 +1,13 @@
 <?php
 
-$remote_atts = ['ids','slugs','cat','tag','excerpt','paged'];
-$posts_per_page = 4;
+include(__DIR__.'/../inc/remote_atts.php');
+//$remote_atts = ['ids','slugs','cat','tag','excerpt','paged','offset','simple','posts_per_page'];
+//$posts_per_page = 4;
+$query_array = [];
 
 foreach ($remote_atts as &$attribute) {
     $$attribute =  isset($_GET[$attribute]) ? sanitize_text_field($_GET[$attribute]) : null;
 }
-
-$query_array = [];
 
 if ($ids) {
     $ids_array = explode(',', $ids);
@@ -28,10 +28,20 @@ if ($ids) {
     if ($cat) { $query_array = ['category_name' => $cat]; }
 }
 
+if ($posts_per_page){
+    if ($posts_per_page > 24) { 
+        $posts_per_page = 24; 
+    }
+} else {
+    $posts_per_page = 4;
+}
+
 $query_array = array_merge($query_array, array(
     'posts_per_page' => $posts_per_page,
     'paged' => $paged,
-    'post_status' => 'publish'
+    'post_status' => 'publish',
+    'offset' => $offset,
+    'no_found_rows' => $simple
 ));
 
 $the_query = new WP_Query($query_array);
