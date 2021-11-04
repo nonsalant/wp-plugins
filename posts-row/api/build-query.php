@@ -1,6 +1,6 @@
 <?php
 
-include(__DIR__.'/../inc/remote_atts.php');
+include(__DIR__.'/../templates/remote_atts.php');
 //$remote_atts = ['ids','slugs','cat','tag','excerpt','paged','offset','simple','posts_per_page'];
 //$posts_per_page = 4;
 $query_array = [];

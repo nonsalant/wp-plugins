@@ -14,68 +14,77 @@ posts_rows.forEach((row) => {
   pageOfTotal.innerHTML = row.querySelector("[data-totalpages]").dataset.totalpages;
   pageOfTotal.addEventListener("click", (e) => {
     pagination = totalpages;
-    fetchPage(pagination);
+    updateCurrent(pagination);
     e.preventDefault();
   });
 
   //
   row.querySelector(".go-to-page-1").addEventListener("click", (e) => {
     pagination = 1;
-    fetchPage(pagination);
+    updateCurrent(pagination);
     e.preventDefault();
   });
 
-  const fetchPage = (pagination) => {
+  const updateCurrent = async (pagination) => {
+
+    const html = await fetchPage(pagination);
+
+    remoteElement.innerHTML = html;
+    remoteElement.dataset.pagination = pagination;
+
+    //
+    row.querySelector(".page-of--current").innerHTML = row.querySelector("[data-pagination]").dataset.pagination;
+
+    row.querySelector(".posts-row").classList.remove("loading");
+    
+    // scroll back up only on mobile
+    if (window.innerWidth <= 680) {
+      
+      row.scrollIntoView();
+
+      // pulsate heading
+      targetElement = row.querySelector(".posts-row-wrapper-header");
+      targetElement.classList.remove("pulsate");
+      void targetElement.offsetWidth; // trigger a reflow
+      targetElement.classList.add("pulsate");
+
+      // show .go-to-page-1 on following pages
+      if (pagination < 3) { // ℹ️ 2 or 3
+        // un-hide .go-to-page-1
+        row.querySelector(".go-to-page-1").classList.add("hidden");
+      } else {
+        // hide .go-to-page-1
+        row.querySelector(".go-to-page-1").classList.remove("hidden");
+      }
+      
+    }
+
+    refreshArrows();
+  }
+
+  const fetchPage = async (pagination) => {
 
     const remote_location = row.querySelector("[data-remote_location]").dataset.remote_location;
     //"/api/?heading=$heading&ids=$ids&cat=$cat&link=$link&button=$button";
+
     row.querySelector(".posts-row").classList.add("loading");
 
-    fetch(remote_location + "&paged=" + pagination)
-      .then(function (response) {
-        return response.text();
-      })
-      .then(function (html) {
-        remoteElement.innerHTML = html;
-        remoteElement.dataset.pagination = pagination;
-
-        //
-        row.querySelector(".page-of--current").innerHTML = row.querySelector("[data-pagination]").dataset.pagination;
-        //refreshArrows();
-
-        row.querySelector(".posts-row").classList.remove("loading");
-        
-        // scroll back up only on mobile
-        if (window.innerWidth <= 680) {
-          
-          row.scrollIntoView();
-
-          // pulsate heading
-          targetElement = row.querySelector(".posts-row-wrapper-header")
-          targetElement.classList.remove("pulsate")
-          void targetElement.offsetWidth // trigger a reflow
-          targetElement.classList.add("pulsate")
-
-          // show .go-to-page-1 on following pages
-          if (pagination < 3) { // ℹ️ 2 or 3
-            // un-hide .go-to-page-1
-            row.querySelector(".go-to-page-1").classList.add("hidden");
-          } else {
-            // hide .go-to-page-1
-            row.querySelector(".go-to-page-1").classList.remove("hidden");
-          }
-          
+    try {
+      const response = await fetch(remote_location + "&paged=" + pagination, {
+        headers: {
+          Accept: "text/plain", //Accept: "application/json"
         }
-  
       })
-      .catch(function (err) {
-        console.warn("Something went wrong.", err);
-        row
-          .querySelector(".posts-row")
-          .classList.remove("loading");
-      });
+
+      let data = await response.text(); //const data = await response.json();
+      return data;
+      
+    } catch (err) {
+      console.warn("⚠ Something went wrong.", err);
+      row.querySelector(".posts-row").classList.remove("loading");
+    }
+      
     
-    refreshArrows();
   };
 
   const refreshArrows = () => {
@@ -100,11 +109,12 @@ posts_rows.forEach((row) => {
 
   linkNext.addEventListener("click", () => {
     pagination++;
-    fetchPage(pagination);
+    updateCurrent(pagination);
   });
 
   linkPrevious.addEventListener("click", () => {
     pagination--;
-    fetchPage(pagination);
+    updateCurrent(pagination);
   });
-});
+
+}); // end of posts_rows.forEach

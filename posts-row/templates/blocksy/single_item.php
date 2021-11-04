@@ -1,7 +1,5 @@
 <?php 
-$if = function ($condition, $thenString, $elseString=null) { 
-    return $condition ? $thenString : $elseString; 
-};
+include(__DIR__.'/../template-functions.php');
 
 //$excerpt_container = "<div class='excerpt'>$excerpt</div>";
 
@@ -22,7 +20,7 @@ $single_item = <<<HTML
             )}
             
             <div class="">
-                ⏤<a class="readmore" href="{$uri}" >Read More</a> 
+                <a class="readmore" href="{$uri}" >READ MORE</a> 
             </div>
         </div>
 </article>

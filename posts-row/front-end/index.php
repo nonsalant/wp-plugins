@@ -2,8 +2,9 @@
 
 // $posts_row_template = 'felt';
 // $posts_row_template = 'default';
-$posts_row_template = 'blocksy';
-$posts_row_template_file = __DIR__.'/../templates/'.$posts_row_template.'/posts_row.php';
+//$posts_row_template = 'blocksy';
+include(__DIR__.'/../templates/template-settings.php');
+$posts_row_template_file = __DIR__.'/../templates/'.$posts_row_template.'/index.php';
 
 
 // enqueue scripts & styles
@@ -20,7 +21,7 @@ add_action('init', function () {
 function posts_row_shortcode($atts = []) {
     global $row_id, $posts_row_template;
     
-    include(__DIR__.'/../inc/remote_atts.php');
+    include(__DIR__.'/../templates/remote_atts.php');
     //$remote_atts = ['ids','slugs','cat','tag','excerpt','paged','offset','simple'];
             
     $local_atts = ['heading','button','link'];
@@ -45,7 +46,7 @@ function posts_row_shortcode($atts = []) {
     
 
     // uses $remote_atts[], $row_id, var names from $local_atts[], $posts_row_template_file
-    require('user-agent.php'); 
+    require('remote-request.php'); 
     // $initial_content is set here.
 
     return $initial_content;
