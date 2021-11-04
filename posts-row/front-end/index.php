@@ -19,7 +19,7 @@ add_action('init', function () {
 });
 
 function posts_row_shortcode($atts = []) {
-    global $row_id, $posts_row_template;
+    global $row_id, $posts_row_template, $posts_row_template_file;
     
     include(__DIR__.'/../templates/remote_atts.php');
     //$remote_atts = ['ids','slugs','cat','tag','excerpt','paged','offset','simple'];

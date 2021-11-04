@@ -14,9 +14,6 @@ $remote_content = wp_remote_retrieve_body(wp_remote_request($remote_location));
 
 $row_id++;
 
-// $posts_row_template_file = __DIR__.'/../templates/'.$posts_row_template.'/index.php';
-global $posts_row_template_file;
-
 // uses var names from $local_atts[], $row_id, $remote_location
 require($posts_row_template_file);
 // $posts_row is set here
