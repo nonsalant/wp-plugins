@@ -1,110 +1,53 @@
-const posts_rows = document.querySelectorAll("[id^='posts-row-wrapper']");
-let i = 0;
+// use await instead and add it at the end?
+// import page_of from 'https://codepen.io/nonsalant/pen/aa624500ad336a82b27dcc0677571897.js';
+import page_of from "./page_of.js"
+import updateCurrent from "./_update_current.js"
+// import refreshArrows from "./_refresh_arrows.js"
 
-posts_rows.forEach((row) => {
-  i++;
+/////
+document.addEventListener("DOMContentLoaded", () => {
+  const posts_rows = document.querySelectorAll("[id^='posts-row-wrapper']");
+
+  posts_rows.forEach((row) => {
+    processRow(row)
+  }) // end of posts_rows.forEach
+}); // end of addEventListener
+/////
+
+/// move this to a module w/ exports default
+/// and use {processRow} = import from process-row.js
+/// ?should this be ...= async (row) => ...
+const processRow = (row) => {
   const totalpages = row.querySelector("[data-totalpages]").dataset.totalpages;
   let pagination = 1;
   const linkNext = row.querySelector(".next-page");
   const linkPrevious = row.querySelector(".previous-page");
   let remoteElement = row.querySelector("[data-pagination]");
 
-  //
-  let pageOfTotal = row.querySelector(".page-of .page-of--total");
-  pageOfTotal.innerHTML = row.querySelector("[data-totalpages]").dataset.totalpages;
-  pageOfTotal.addEventListener("click", (e) => {
-    pagination = totalpages;
-    fetchPage(pagination);
-    e.preventDefault();
-  });
+  // 🚩 page_of being used here
+  page_of(row);
 
-  //
-  row.querySelector(".go-to-page-1").addEventListener("click", (e) => {
-    pagination = 1;
-    fetchPage(pagination);
-    e.preventDefault();
-  });
+  // ✂️ updateCurrent def. was taken from here
 
-  const fetchPage = (pagination) => {
+  // fetchPage def. was taken from here
 
-    const remote_location = row.querySelector("[data-remote_location]").dataset.remote_location;
-    //"/api/?heading=$heading&ids=$ids&cat=$cat&link=$link&button=$button";
-    row.querySelector(".posts-row").classList.add("loading");
 
-    fetch(remote_location + "&paged=" + pagination)
-      .then(function (response) {
-        return response.text();
-      })
-      .then(function (html) {
-        remoteElement.innerHTML = html;
-        remoteElement.dataset.pagination = pagination;
-
-        //
-        row.querySelector(".page-of--current").innerHTML = row.querySelector("[data-pagination]").dataset.pagination;
-        //refreshArrows();
-
-        row.querySelector(".posts-row").classList.remove("loading");
-        
-        // scroll back up only on mobile
-        if (window.innerWidth <= 680) {
-          
-          row.scrollIntoView();
-
-          // pulsate heading
-          targetElement = row.querySelector(".posts-row-wrapper-header")
-          targetElement.classList.remove("pulsate")
-          void targetElement.offsetWidth // trigger a reflow
-          targetElement.classList.add("pulsate")
-
-          // show .go-to-page-1 on following pages
-          if (pagination < 3) { // ℹ️ 2 or 3
-            // un-hide .go-to-page-1
-            row.querySelector(".go-to-page-1").classList.add("hidden");
-          } else {
-            // hide .go-to-page-1
-            row.querySelector(".go-to-page-1").classList.remove("hidden");
-          }
-          
-        }
-  
-      })
-      .catch(function (err) {
-        console.warn("Something went wrong.", err);
-        row
-          .querySelector(".posts-row")
-          .classList.remove("loading");
-      });
-    
-    refreshArrows();
-  };
-
-  const refreshArrows = () => {
-    if (pagination < 2) {
-      linkPrevious.disabled = true;
-    } else {
-      linkPrevious.disabled = false;
-    }
-    if (pagination >= totalpages) {
-      linkNext.disabled = true;
-    } else {
-      linkNext.disabled = false;
-    }
-  };
+  // use for each if using 2 pairs of arrows (ie: in heading_details)
 
   if (totalpages > 1) {
+    // still needed in case show-arrows was used but it didn't paginate
     linkPrevious.classList.remove("hidden");
     linkNext.classList.remove("hidden");
-    row.querySelector(".page-of").classList.remove("hidden");
-    refreshArrows();
   }
 
   linkNext.addEventListener("click", () => {
-    pagination++;
-    fetchPage(pagination);
+    const pagination = +remoteElement.dataset.pagination;
+    updateCurrent(row, pagination + 1);
   });
 
   linkPrevious.addEventListener("click", () => {
-    pagination--;
-    fetchPage(pagination);
+    const pagination = +remoteElement.dataset.pagination;
+    updateCurrent(row, pagination - 1);
   });
-});
+
+}

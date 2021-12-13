@@ -1,5 +1,4 @@
-<?php 
-include(__DIR__.'/../template-functions.php');
+<?php
 
 $header = "<h2 class='posts-row-wrapper-header'>$heading</h2>";
 $footer = "<div class='posts-row-wrapper-footer'><a class='item-read-more' href='$link'>$button</a></div>";

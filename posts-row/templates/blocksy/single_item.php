@@ -1,5 +1,9 @@
-<?php 
-include(__DIR__.'/../template-functions.php');
+<?php
+
+// $if = function ($condition, $thenString, $elseString=null) { 
+//     return $condition ? $thenString : $elseString; 
+// };
+
 
 //$excerpt_container = "<div class='excerpt'>$excerpt</div>";
 

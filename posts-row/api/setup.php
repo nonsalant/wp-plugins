@@ -6,8 +6,7 @@ require_once('../../../../wp-load.php');
 
 // only allow access if the plugin is active: 
 require_once('../../../../wp-admin/includes/plugin.php'); 
-if ( ! is_plugin_active('posts-row/posts-row.php') ) {
+if ( ! is_plugin_active('posts-row/plugin.php') ) {
     http_response_code(503);
-    echo '<p>the plugin is inactive.</p>';
-    return;
+    die('<p>The plugin is inactive.</p>');
 }

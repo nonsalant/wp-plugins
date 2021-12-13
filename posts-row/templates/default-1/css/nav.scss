@@ -8,11 +8,10 @@ html, body {
     }
 }
 
+/* Vars. */
 .posts-row-wrapper {
-    /* Vars. */
     --gap: 1rem;
     --main-clr: #3862aa;
-    --main-clr: var(--linkColor);
     --secondary-clr: hsla(36, 20%, 35%, 1);
 
     position: relative;
@@ -93,10 +92,8 @@ html, body {
     transition: opacity .3s ease-in, transform .3s ease-in;
     transform: scale(0.65);
     background-color: var(--main-clr);
-    background-color: var(--buttonInitialColor);
     border-radius: 15%;
     color: #fff;
-    color: var(--buttonTextInitialColor);
     padding: .25% .75%;
     
     & svg {
@@ -107,8 +104,6 @@ html, body {
     &:hover {
         opacity: 1;
         transform: scale(.75);
-        background-color: var(--buttonHoverColor);
-        color: var(--buttonTextHoverColor);
     }
     
     &:focus {

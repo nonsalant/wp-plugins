@@ -16,11 +16,10 @@ html, body {
   }
 }
 
+/* Vars. */
 .posts-row-wrapper {
-  /* Vars. */
   --gap: 1rem;
   --main-clr: #3862aa;
-  --main-clr: var(--linkColor);
   --secondary-clr: hsla(36, 20%, 35%, 1);
   position: relative;
   /* Block: parent of post items (loading state)  */
@@ -105,10 +104,8 @@ html, body {
   -webkit-transform: scale(0.65);
           transform: scale(0.65);
   background-color: var(--main-clr);
-  background-color: var(--buttonInitialColor);
   border-radius: 15%;
   color: #fff;
-  color: var(--buttonTextInitialColor);
   padding: .25% .75%;
   /* Focusing the button with a mouse, touch, or stylus will show a subtle drop shadow. */
 }
@@ -122,8 +119,6 @@ html, body {
   opacity: 1;
   -webkit-transform: scale(0.75);
           transform: scale(0.75);
-  background-color: var(--buttonHoverColor);
-  color: var(--buttonTextHoverColor);
 }
 
 :is(.previous-page, .next-page):focus {
