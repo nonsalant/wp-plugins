@@ -40,23 +40,6 @@ add_action( 'wp_enqueue_scripts', function() {
     if (is_home() || is_front_page()) {
         posts_row_enqueue("aw2g-home.css");
     }
-
-    // use type="module" when loading the script // https://stackoverflow.com/a/59594789
-    add_filter('script_loader_tag', function($tag, $handle, $src) {
-        //echo ($handle); // some weirdness going on where the handles don't end in "-js" at this filter
-        if ( 'posts-row-script' !== $handle ) { 
-            
-            return $tag;
-        }
-        $tag = '
-        <script type="module" 
-            id="'.$handle.'" 
-            src="'.esc_url($src).'">
-        </script>';
-        
-        return $tag;
-    } , 10, 3);
-
 });
 
 // Add backend styles for: Gutenberg/block editor
@@ -65,8 +48,25 @@ function gutenberg_editor_assets()
 {
     posts_row_enqueue('style.css');
     posts_row_enqueue('nav.css');
+    //
+    posts_row_enqueue('script.js', '0.1.0');
 }
 
+// use type="module" when loading the script // https://stackoverflow.com/a/59594789
+add_filter('script_loader_tag', function ($tag, $handle, $src) {
+    //echo ($handle); // some weirdness going on where the handles don't end in "-js" at this filter
+    if ('posts-row-script' !== $handle) {
+
+        return $tag;
+    }
+    $tag = '
+        <script type="module" 
+            id="' . $handle . '" 
+            src="' . esc_url($src) . '">
+        </script>';
+
+    return $tag;
+}, 10, 3);
 
 
 function posts_row_enqueue($filename, $ver='0.0.0') {
