@@ -60,7 +60,8 @@ function gutenberg_editor_assets()
 // use type="module" when loading the script // https://stackoverflow.com/a/59594789
 add_filter('script_loader_tag', function ($tag, $handle, $src) {
     //echo ($handle); // some weirdness going on where the handles don't end in "-js" at this filter
-    if (!in_array($handle, ['posts-row-script', 'posts-row-_refresh_arrows', 'posts-row-_update_current', 'posts-row-page_of'])) {
+    $module_scripts = ['posts-row-script', 'posts-row-_refresh_arrows', 'posts-row-_update_current', 'posts-row-page_of'];
+    if (!in_array($handle, $module_scripts)) {
 
         return $tag;
     }
