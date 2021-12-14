@@ -46,8 +46,8 @@ add_action( 'wp_enqueue_scripts', function() {
 add_action('enqueue_block_editor_assets', 'gutenberg_editor_assets');
 function gutenberg_editor_assets()
 {
-    posts_row_enqueue('style.css');
-    posts_row_enqueue('nav.css');
+    posts_row_enqueue('style.css', '0.1.2');
+    posts_row_enqueue('nav.css', '0.1.0');
     //
     posts_row_enqueue('script.js', '0.1.0');
 }
