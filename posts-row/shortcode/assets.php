@@ -30,6 +30,10 @@ add_action( 'wp_enqueue_scripts', function() {
     if ( posts_row_has_att($content, "posts-row", "show-arrows") ) {
         posts_row_enqueue('nav.css', '0.1.0');
         posts_row_enqueue('script.js', '0.1.0');
+        //
+        posts_row_enqueue('_refresh_arrows.js', '0.1.0');
+        posts_row_enqueue('_update_current.js', '0.1.0');
+        posts_row_enqueue('page_of.js', '0.1.0');
     }
 
     // include some assets on first pages of categories
@@ -50,12 +54,13 @@ function gutenberg_editor_assets()
     posts_row_enqueue('nav.css', '0.1.0');
     //
     posts_row_enqueue('script.js', '0.1.0');
+    //
 }
 
 // use type="module" when loading the script // https://stackoverflow.com/a/59594789
 add_filter('script_loader_tag', function ($tag, $handle, $src) {
     //echo ($handle); // some weirdness going on where the handles don't end in "-js" at this filter
-    if ('posts-row-script' !== $handle) {
+    if (!in_array($handle, ['posts-row-script', 'posts-row-_refresh_arrows', 'posts-row-_update_current', 'posts-row-page_of'])) {
 
         return $tag;
     }
