@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", () => {
 /// ?should this be ...= async (row) => ...
 const processRow = (row) => {
   const totalpages = row.querySelector("[data-totalpages]").dataset.totalpages;
-  let pagination = 1;
+  // let pagination = 1;
   const linkNext = row.querySelector(".next-page");
   const linkPrevious = row.querySelector(".previous-page");
   let remoteElement = row.querySelector("[data-pagination]");

@@ -45,9 +45,9 @@ const updateCurrent = async (row, pagination) => {
 
         // pulsate heading
         const targetElement = row.querySelector(".posts-row-wrapper-header");
-        targetElement.classList.remove("pulsate");
-        void targetElement.offsetWidth; // trigger a reflow
-        targetElement.classList.add("pulsate");
+        targetElement?.classList.remove("pulsate");
+        void targetElement?.offsetWidth; // trigger a reflow
+        targetElement?.classList.add("pulsate");
 
         // 🚩 page_of WAS being used here
 
