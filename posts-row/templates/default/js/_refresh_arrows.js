@@ -14,7 +14,7 @@ const refreshArrows = (row) => {
     } else {
         linkPrevious.disabled = false;
     }
-    if (pagination >= totalpages) {
+    if (pagination === totalpages || pagination > totalpages) {
         linkNext.disabled = true;
         console.log("...this evaluated to true: " + pagination + " >= " + totalpages)
     } else {
