@@ -31,9 +31,9 @@ add_action( 'wp_enqueue_scripts', function() {
         posts_row_enqueue('nav.css', '0.1.0');
         posts_row_enqueue('script.js', '0.1.0');
         //
-        posts_row_enqueue('_refresh_arrows.js', '0.1.0');
-        posts_row_enqueue('_update_current.js', '0.1.0');
-        posts_row_enqueue('page_of.js', '0.1.0');
+        // posts_row_enqueue('_refresh_arrows.js', '0.1.0');
+        // posts_row_enqueue('_update_current.js', '0.1.0');
+        // posts_row_enqueue('page_of.js', '0.1.0');
     }
 
     // include some assets on first pages of categories
