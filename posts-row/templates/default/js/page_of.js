@@ -27,7 +27,6 @@ const page_of = (row) => {
 }
 
 page_of.update = (row, pagination) => {
-    // console.log(pagination); // 🚨 
 
     row.querySelector(".page-of--current").innerHTML = row.querySelector("[data-pagination]").dataset.pagination;
 
