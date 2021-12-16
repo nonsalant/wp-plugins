@@ -7,7 +7,7 @@ const refreshArrows = (row) => {
     const linkNext = row.querySelector(".next-page");
     const linkPrevious = row.querySelector(".previous-page");
 
-    console.log(pagination + " of " + totalpages)
+    // console.log(pagination + " of " + totalpages)
 
     if (pagination < 2) {
         linkPrevious.disabled = true;
