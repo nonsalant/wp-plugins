@@ -7,6 +7,7 @@ const page_of = (row) => {
     // let totalpages
     const totalpages = row.querySelector("[data-totalpages]").dataset.totalpages
     pageOfTotal.innerText = totalpages
+    // console.log(totalpages); // 🚨 only fires on initial page load??
     pageOfTotal.addEventListener("click", (e) => {
         updateCurrent(row, totalpages);
         e.preventDefault();
@@ -26,6 +27,8 @@ const page_of = (row) => {
 }
 
 page_of.update = (row, pagination) => {
+    console.log(pagination); // 🚨 
+
     row.querySelector(".page-of--current").innerHTML = row.querySelector("[data-pagination]").dataset.pagination;
 
     // mobile only: hide "back to 1st page" link on 1st page
