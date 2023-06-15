@@ -1,0 +1,8 @@
+# # exclude some files from posts-row plugin
+# assets/index.css
+# assets/index.js
+# assets/index.js.map
+# assets/style.js.map
+# assets/style-paged.js.map
+# php-api/allow-cors.php
+# php-api/asset-request.php
