@@ -1,6 +1,6 @@
 <?php
 
-$template_outer_html_location = '../php-templates/listing.php';
+$template_outer_html_location = 'templates/listing.php';
 
 $non_null_remote_atts = [];
 foreach ($remote_atts as &$attribute) {

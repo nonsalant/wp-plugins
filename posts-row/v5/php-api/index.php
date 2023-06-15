@@ -7,13 +7,16 @@
 
 $path_to_plugin = $_SERVER['DOCUMENT_ROOT'] . '/wp-content/plugins/posts-row';
 $path_to_root = $_SERVER['DOCUMENT_ROOT'];
-$template_single_item_location = $path_to_plugin . '/v5/php-templates/single.php';
+$template_single_item_location = $path_to_plugin . '/v5/php-backend/templates/single.php';
 // $path_to_root = '..'; // if api 📁 is inside wp-content/plugins/posts-row
-// $template_single_item_location = '../wp-content/plugins/posts-row/v5/php-templates/single.php';
+// $template_single_item_location = '../wp-content/plugins/posts-row/v5/php-backend/templates/single.php';
 $config_location = $path_to_plugin . '/v5/php-backend/config.php';
 
 
 /* Validation */
+
+// Allow CORS -- used for local dev
+include_once('allow-cors.php');
 
 // allow direct access to this file:
 define('WP_USE_THEMES', false);

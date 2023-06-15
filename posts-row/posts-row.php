@@ -12,7 +12,7 @@ http://www.gnu.org/licenses/gpl.txt
 */
 
 // enqueue scripts & styles
-include('php-backend/assets.php');
+include('v5/php-backend/assets.php');
 
 // [posts-row] shortcode setup
-include('php-backend/shortcode.php');
+include('v5/php-backend/shortcode.php');
