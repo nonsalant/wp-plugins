@@ -5,10 +5,10 @@ $asset_version = '2.0.0';
 $plugin_version = 'v5';
 
 $plugin_dir = plugin_dir_path(__FILE__);
-$css_file = "/v5/assets/posts-row.css";
-$js_file =  "/v5/assets/script.js";
-$css_paged_file = "/v5/assets/posts-row-paged.css";
-// $svg_symbols_file = "/v5/php-templates/svg-symbols.html";
+$css_file = "../assets/posts-row.css";
+$js_file =  "../assets/script.js";
+$css_paged_file = "../assets/posts-row-paged.css";
+// $svg_symbols_file = "../php-templates/svg-symbols.html";
 // $css, $js, $css_paged, and svg_symbols -_files are set here:
 // require('config.php');
 
