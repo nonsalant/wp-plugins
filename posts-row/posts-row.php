@@ -1,17 +1,18 @@
 <?php
 /*
 Plugin Name: Posts Row
-Plugin URI: https://csspan.com/posts-row/
-Description: Adds a row of featured content. (Select posts and/or pages by tag, category, slugs, or ID's.) Useful for adding a row of related posts or inside category descriptions or other navigational pages.
+Plugin URI: https://stefanmatei.com
+Description: Adds a row of featured content. (Select posts and/or pages by tag, category, slugs, or ID's.) Useful for customizing archive or other navigational pages. Default styles integrated with the Felt Theme.
 Version: 1.0.0
 Author: Stefan Matei
-Author URI: https://stefanmatei.com
+Author URI: https://stefanmatei.com/posts-row
 Text Domain: posts-row
 Released under the GNU General Public License (GPL)
 http://www.gnu.org/licenses/gpl.txt
-Tags: arrows, ajax, api, query, next, previous, navigation, nav, pagination, paginate, spa, ssr
 */
 
-require('shortcode/index.php');
+// enqueue scripts & styles
+include('php-backend/assets.php');
 
-// require('block/index.php');
+// [posts-row] shortcode setup
+include('php-backend/shortcode.php');
