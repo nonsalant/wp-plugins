@@ -7,6 +7,7 @@
 node_modules/
 
 # exclude some files from posts-row plugin
+*.local
 posts-row/v5/php-api/allow-cors.php
 posts-row/v5/php-api/asset-request.php
 posts-row/v5/assets/index.css

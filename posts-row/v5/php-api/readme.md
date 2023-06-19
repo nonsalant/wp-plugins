@@ -1,1 +1,1 @@
-All moved to root folder in `posts-row-api` folder.
+All moved to root folder in `posts-row-api` folder from `wp-content/plugins/posts-row/v5/php-api/`.
