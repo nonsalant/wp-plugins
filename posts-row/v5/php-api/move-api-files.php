@@ -28,5 +28,5 @@ function move_files_to_api_folder($file_paths)
     }
 }
 
-add_action('wppusher_plugin_was_updated', move_files_to_api_folder($file_paths));
-// add_action('wppusher_plugin_was_installed', move_files_to_api_folder($file_paths));
+add_action('wppusher_plugin_was_updated',  move_files_to_api_folder($file_paths));
+// add_action('wppusher_plugin_was_installed',move_files_to_api_folder($file_paths));
