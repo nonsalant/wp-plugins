@@ -16,3 +16,8 @@ include('v5/php-backend/assets.php');
 
 // [posts-row] shortcode setup
 include('v5/php-backend/shortcode.php');
+
+// move api files to 📁posts-row-api folder in root:
+if (is_admin()) {
+    //include_once('v5/php-api/move-api-files.php');
+}
