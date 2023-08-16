@@ -1,8 +1,4 @@
 <?php
-$if = function ($condition, $thenString, $elseString = null) {
-	return $condition ? $thenString : $elseString;
-};
-
 $single_item = <<<HTML
 <li class="prel">
 	<header class="prel-header">
@@ -15,8 +11,8 @@ $single_item = <<<HTML
 		/>
 	</header>
 	<div class="prel-body">
-		{$if($excerpt, "<h2>$title</h2><p class='excerpt'>$excerpt</p>")}
-		{$if(!$excerpt, "<p>$title</p>")}
+		<h2>{$title}</h2>
+		<p>{$excerpt}</p>
 		<footer class="prel-footer">
 			<a 
 				class="prel-action" 
