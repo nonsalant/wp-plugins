@@ -1,0 +1,1 @@
+index.php gets created in root folder, inside a `posts-row-api` folder from `wp-content/plugins/posts-row/v5/api/`.

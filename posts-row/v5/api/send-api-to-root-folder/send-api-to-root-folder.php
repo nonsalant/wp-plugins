@@ -1,4 +1,11 @@
 <?php
+
+// todo:     - [x] update move-files.php to just send a file like send-to-api-dir/index.php
+// todo:     - [ ] test updated move-files.php
+// todo:     - [ ] delete remote api folder on plugin uninstall
+
+namespace PostsRow;
+
 defined('ABSPATH') or die('Direct access not allowed.');
 
 // $path_to_root = $_SERVER['DOCUMENT_ROOT'];
@@ -7,9 +14,9 @@ $api_path = $_SERVER['DOCUMENT_ROOT'] . '/posts-row-api/';
 
 // Creating a map structure 
 $file_paths = array(
-    "index.php" => $api_path . "index.php",
-    "loop.php" => $api_path . "loop.php",
-    "the-query-from-remote-atts.php" => $api_path . "the-query-from-remote-atts.php"
+    "index.php" => $api_path . "index.php"
+    // , "loop.php" => $api_path . "loop.php"
+    // , "build-query.php" => $api_path . "build-query.php"
 );
 
 function move_files_to_api_folder($file_paths)
@@ -28,5 +35,6 @@ function move_files_to_api_folder($file_paths)
     }
 }
 
-add_action('wppusher_plugin_was_updated',  move_files_to_api_folder($file_paths));
-// add_action('wppusher_plugin_was_installed',move_files_to_api_folder($file_paths));
+// add_action('wppusher_plugin_was_updated',  __NAMESPACE__.'\'.move_files_to_api_folder($file_paths));
+// // awppusher_plugin_was_installed
+// // add_action('wppusher_plugin_was_updated',  move_files_to_api_folder($file_paths));

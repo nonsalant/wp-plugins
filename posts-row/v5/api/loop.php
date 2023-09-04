@@ -1,5 +1,7 @@
 <?php
 
+namespace PostsRow;
+
 while ( $the_query->have_posts() ) { $the_query->the_post();
     // $img_size = 'pixelgrade_hero_image';
     $img_size = 'large';
@@ -7,18 +9,25 @@ while ( $the_query->have_posts() ) { $the_query->the_post();
     $title = get_the_title();
     $uri = get_permalink();
     $excerpt = $excerpt ? get_the_excerpt() : null;
-
-    /// 4 jun ~20
     $img_id = get_post_thumbnail_id();
     $img_alt = get_post_meta($img_id, '_wp_attachment_image_alt', TRUE);
     if (!$img_alt) { $img_alt = "Read more: ".$title; }
-    // //$size = 'my-size'; // Defaults to 'thumbnail' if omitted.
     // $img_src = wp_get_attachment_image_src($img_id, $size)[0];
 
+    // sanitize global vars 
+    // (props used in template components)
+    sanitizeIfAvailable([
+        'uri',
+        'title',
+        'img',
+        'img_alt',
+        'excerpt',
+        'morelink'
+    ]);
+
     // uses var names from $remote_atts[]
-    require($template_single_item_location); 
+    require($template_single_location); 
     // $single_item is set here.
 
     echo $single_item;
-
 }

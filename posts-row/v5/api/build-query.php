@@ -1,5 +1,7 @@
 <?php
 
+namespace PostsRow;
+
 foreach ($remote_atts as &$attribute) {
     $$attribute =  isset($_GET[$attribute]) ? sanitize_text_field($_GET[$attribute]) : null;
 }
@@ -41,4 +43,4 @@ $query_array = array_merge($query_array, array(
     'post_status' => 'publish'
 ));
 
-$the_query = new WP_Query($query_array);
+$the_query = new \WP_Query($query_array);

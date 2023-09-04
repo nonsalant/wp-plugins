@@ -1,18 +1,22 @@
 <?php
+// enqueue scripts & styles
+namespace PostsRow;
+
 $bust_asset_cache = true; // ⚠️ avoid doing this (don't bust cache, not even based on filetime) in prod
 $bust_asset_cache = false; // ⛔️ comment out this line to disable cache (bust cache based on filetime)
 $asset_version = '2.0.0';
 $plugin_version = 'v5';
 
 $plugin_dir = plugin_dir_path(__FILE__);
-$css_file = "../assets/posts-row.css";
-$js_file =  "../assets/script.js";
-$css_paged_file = "../assets/posts-row-paged.css";
-// $svg_symbols_file = "../php-templates/svg-symbols.html";
+$css_file = '../assets/posts-row.css';
+$js_file =  '../assets/script.js';
+$css_paged_file = '../assets/posts-row-paged.css';
+// $svg_symbols_file = '../templates/svg-symbols.html';
 // $css, $js, $css_paged, and svg_symbols -_files are set here:
 // require('config.php');
 
-add_filter('the_content', 'posts_row_filter_the_content', 1);
+add_filter('the_content', __NAMESPACE__ . '\posts_row_filter_the_content', 1);
+// add_filter('the_content', 'posts_row_filter_the_content', 1);
 function posts_row_filter_the_content($content)
 {
     global $css_file, $js_file, $css_paged_file;
@@ -20,24 +24,17 @@ function posts_row_filter_the_content($content)
     if (has_shortcode($content, 'posts-row')) {
 
         enqueue_asset($css_file);
-        if (posts_row_has_att($content, "posts-row", "paginate")) {
+        if (posts_row_has_att($content, 'posts-row', 'paginate')) {
             enqueue_asset($js_file);
             enqueue_asset($css_paged_file, 'posts-row-style-paged');
             // inject html with svg symbols in footer
-            $content .= '
-            <!-- next-prev-arrows -->
-            <svg style="display:none">
-                <symbol id="arrow-left-thin"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></symbol>
-                <symbol id="arrow-left"><path fill-rule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd"></path></symbol>
-                <symbol id="arrow-right"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></symbol>
-            </svg>
-            <!-- /next-prev-arrows -->';
+            $content .=  include_once('svg-symbols.html');
         }
     }
     return $content;
 }
 
-function enqueue_asset($file, $name = "")
+function enqueue_asset($file, $name = '')
 {
     global $bust_asset_cache, $asset_version, $plugin_dir;
     $cache_buster = $bust_asset_cache ? filemtime($plugin_dir . $file) : $asset_version;
